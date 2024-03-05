@@ -1,0 +1,33 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        mavenCentral()
+        //华为HMS
+        maven { url 'https://developer.huawei.com/repo/' }
+    }
+
+    dependencies {
+        classpath "com.alibaba:arouter-register:1.0.2"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31"
+        //华为HMS
+        classpath 'com.huawei.agconnect:agcp:1.5.2.300'
+    }
+}
+
+plugins {
+    id 'com.android.application' version '8.0.0' apply false
+    id 'com.android.library' version '8.0.0' apply false
+    id 'org.jetbrains.kotlin.android' version '1.8.0' apply false
+}
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        //华为HMS
+        maven {url 'https://developer.huawei.com/repo/'}
+    }
+}
+apply plugin: 'com.alibaba.arouter'
+
+

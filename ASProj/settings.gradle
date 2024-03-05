@@ -1,0 +1,33 @@
+import org.gradle.api.initialization.resolve.RepositoriesMode
+
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "ASProj"
+include ':app'
+include ':hilibrary'
+include ':hi-ui'
+include ':common'
+
+//for flutter
+setBinding(new Binding([gradle:this]))
+evaluate(new File(
+        settingsDir.parentFile,
+        'flutter_module/.android/include_flutter.groovy'
+))
+
+include ':flutter_module'
+project(':flutter_module').projectDir = new File('../flutter_module')
+include ':hi-ability'
