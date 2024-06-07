@@ -17,8 +17,7 @@ import java.lang.reflect.*
 
 class MethodParser(
     private val baseUrl: String,
-    method: Method,
-    args: Array<Any>
+    method: Method
 ) {
     private var replaceRelativeUrl: String? = null
     private var cacheStrategy: Int = CacheStrategy.NET_ONLY
@@ -34,7 +33,7 @@ class MethodParser(
         parseMethodAnnotations(method)
 
         parseMethodReturnType(method)
-        parseMethodParameters(method, args)
+//        parseMethodParameters(method, args)
     }
 
     private fun parseMethodAnnotations(method: Method) {
@@ -150,7 +149,7 @@ class MethodParser(
 
     fun newRequest(method:Method,args:Array<out Any>?):HiRequest{
         val arguments: Array<Any> = args as Array<Any>? ?: arrayOf()
-//        parseMethodParam
+        parseMethodParameters(method,arguments)
         val request = HiRequest()
         request.domainUrl = domainUrl
         request.returnType = returnType
@@ -210,8 +209,8 @@ class MethodParser(
     }
 
     companion object{
-        fun parse(baseUrl: String,method: Method,args: Array<Any>):MethodParser{
-            return MethodParser(baseUrl, method,args)
+        fun parse(baseUrl: String,method: Method):MethodParser{
+            return MethodParser(baseUrl, method)
         }
     }
 }

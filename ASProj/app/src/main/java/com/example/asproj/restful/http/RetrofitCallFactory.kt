@@ -6,6 +6,8 @@ import com.example.asproj.restful.HiResponse
 import com.example.asproj.restful.annotation.HiCall
 import okhttp3.FormBody
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -19,15 +21,20 @@ import retrofit2.http.HeaderMap
 import retrofit2.http.POST
 import retrofit2.http.QueryMap
 import retrofit2.http.Url
-import java.lang.IllegalStateException
+
 
 class RetrofitCallFactory(baseUrl: String) : HiCall.Factory {
     private var apiService: ApiService
     private var hiConvert: HiConvert
 
     init {
+        val myCookieJar = MyCookieJar()
+        val okHttpClient = OkHttpClient.Builder()
+            .cookieJar(myCookieJar)
+            .build()
         val retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
+            .client(okHttpClient)
             .build()
 
         apiService = retrofit.create(ApiService::class.java)
@@ -69,6 +76,11 @@ class RetrofitCallFactory(baseUrl: String) : HiCall.Factory {
                 if (body != null) {
                     rawData = body.string()
                 }
+            }else{
+                val body:ResponseBody? = response.errorBody()
+                if(body != null){
+                    rawData = body.toString()
+                }
             }
             return hiConvert.convert(rawData!!, request.returnType!!)
         }
@@ -94,7 +106,9 @@ class RetrofitCallFactory(baseUrl: String) : HiCall.Factory {
 
         private fun buildRequestBody(request:HiRequest):RequestBody{
             val paramters:MutableMap<String,String>? = request.parameters
+            //表单提交
             val builder = FormBody.Builder()
+            //json格式
             val requestBody:RequestBody
             val jsonObject = JSONObject()
             if(paramters != null){
@@ -110,7 +124,7 @@ class RetrofitCallFactory(baseUrl: String) : HiCall.Factory {
                 requestBody = builder.build()
             }else{
                 requestBody = RequestBody.create(
-                    MediaType.parse("application/json;charset = utf-8"),
+                    "application/json;charset = utf-8".toMediaTypeOrNull(),
                     jsonObject.toString()
                 )
             }

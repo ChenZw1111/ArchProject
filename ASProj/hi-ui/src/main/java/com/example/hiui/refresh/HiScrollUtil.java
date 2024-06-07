@@ -14,7 +14,7 @@ public class HiScrollUtil {
      * 判断child是否发生了滚动
      *
      * @param child
-     * @return
+     * @return true 发生了滚动
      */
     public static boolean childScrolled(@NonNull View child) {
         if (child instanceof AdapterView) {

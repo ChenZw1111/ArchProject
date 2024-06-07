@@ -53,6 +53,19 @@
         app:titleTextAppearance="@style/titleTextAppearance" />
 
     <com.example.hiui.input.InputItemLayout
+        android:id="@+id/input_item_phoneNum"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:background="@color/color_white"
+        android:paddingLeft="@dimen/dp_16"
+        app:bottomLineAppearance="@style/leftMargin_lineAppearance"
+        app:hint="@string/input_item_hint_user_phoneNum"
+        app:inputTextAppearance="@style/inputTextAppearance"
+        app:inputType="text"
+        app:title="@string/input_item_title_user_phoneNum"
+        app:titleTextAppearance="@style/titleTextAppearance" />
+
+    <com.example.hiui.input.InputItemLayout
         android:id="@+id/input_item_pwd"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48"

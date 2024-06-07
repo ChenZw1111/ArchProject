@@ -27,4 +27,8 @@
         <item name="rightMargin">0dp</item>
         <item name="enable">true</item>
     </style>
+    <style name="Theme_Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>

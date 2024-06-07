@@ -37,7 +37,7 @@ class DegradeGlobalActivity : AppCompatActivity() {
 //        emptyView.setIcon(R.string.if_unexpected1)
 //        emptyView.setDesc(getString(R.string.degrade_text))
 //        Toast.makeText(this,"oncreate",Toast.LENGTH_SHORT).show()
-//        ARouter.getInstance().inject(this)
+        ARouter.getInstance().inject(this)
         setContentView(R.layout.layout_global_degrade)
         val emptyView = findViewById<LostView>(R.id.empty_view)
         if (!TextUtils.isEmpty(degrade_title)) {
@@ -56,6 +56,7 @@ class DegradeGlobalActivity : AppCompatActivity() {
                             Intent.ACTION_VIEW,
                             Uri.parse(degrade_action)
                         )
+                    startActivity(intent)
                 }
             })
         }

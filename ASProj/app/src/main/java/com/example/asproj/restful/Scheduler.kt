@@ -7,6 +7,9 @@ import com.example.asproj.restful.annotation.HiCall
 import com.example.asproj.restful.annotation.HiInterceptor
 import com.example.hilibrary.util.MainHandler
 
+/**
+ * 代理CallFactory创建出来的call对象，从而实现拦截器的派发动作
+ */
 class Scheduler(
     private val callFactory: HiCall.Factory,
     private val interceptors: MutableList<HiInterceptor>

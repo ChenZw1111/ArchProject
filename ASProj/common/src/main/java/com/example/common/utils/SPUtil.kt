@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 
-class SPUtil {
+object SPUtil {
     private val CACHE_FILE = "cache_file"
     fun putString(key: String, value: String?) {
         val shared = getShared()

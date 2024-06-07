@@ -9,15 +9,19 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
+import com.example.asproj.biz.account.AccountManager
 import com.example.asproj.restful.HiCallback
 import com.example.asproj.restful.HiResponse
 import com.example.asproj.restful.api.AccountApi
 import com.example.asproj.restful.http.ApiFactory
 import com.example.common.HiBaseActivity
+import com.example.common.utils.SPUtil
 import com.example.hiui.icont.IconFontTextView
 import com.example.hiui.input.InputItemLayout
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 
@@ -52,14 +56,9 @@ class LoginActivity : HiBaseActivity() {
     }
 
     suspend fun parseAssetsFile(): String {
-        return suspendCancellableCoroutine { continuation ->
-            Thread {
-                Log.e(TAG, "assets loading....")
-                Thread.sleep(2000)
-                continuation.resumeWith(Result.success("assets file content"))
-                Log.e(TAG, "completed....")
-            }.start()
-        }
+        delay(2000)
+        print("after delay")
+        return "result from parse"
     }
 
     private fun goLogin() {
@@ -74,12 +73,19 @@ class LoginActivity : HiBaseActivity() {
         ApiFactory.create(AccountApi::class.java).login(name, pwd)
             .enqueue(object : HiCallback<String> {
                 override fun onSuccess(response: HiResponse<String>) {
-                    showToast(response.code.toString())
+                    showToast("登陆成功")
+                    val data = response.data
+//                    SPUtil.putString("boarding-pass",data!!)
+                    Log.e(TAG,Thread.currentThread().name)
+                    AccountManager.loginSuccess(data!!)
+                    setResult(Activity.RESULT_OK,Intent())
+                    finish()
                 }
 
                 override fun onFailed(throwable: Throwable) {
                     throwable.printStackTrace()
-                    showToast("fail")
+                    showToast("登陆失败")
+                    Log.e(TAG,Thread.currentThread().name)
                 }
             })
 
@@ -94,17 +100,15 @@ class LoginActivity : HiBaseActivity() {
     }
 
     private fun goRegistration() {
-        startActivityForResult(
-            Intent(this, RegistrationActivity::class.java),
-            REQUEST_CODE_REGISTRATION
-        )
+        ARouter.getInstance().build("/account/registration")
+            .navigation(this,REQUEST_CODE_REGISTRATION)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if ((resultCode == Activity.RESULT_OK) and (data != null) and (requestCode == REQUEST_CODE_REGISTRATION)) {
             val username = data!!.getStringExtra("username")
-            if (!TextUtils.isEmpty(username)) {
+            if (TextUtils.isEmpty(username)) {
                 findViewById<InputItemLayout>(R.id.input_item_username).getEditText()
                     .setText(username)
             }

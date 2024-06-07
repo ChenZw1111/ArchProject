@@ -60,4 +60,6 @@
     <string name="input_item_hint_pwd2">请再次输入密码</string>
     <string name="input_item_title_pwd2">确认密码</string>
     <string name="action_submit">确认</string>
+    <string name="input_item_hint_user_phoneNum">请输入电话号码</string>
+    <string name="input_item_title_user_phoneNum">手机号码</string>
 </resources>

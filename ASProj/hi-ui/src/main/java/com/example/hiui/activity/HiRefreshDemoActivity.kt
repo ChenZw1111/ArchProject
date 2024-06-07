@@ -3,6 +3,7 @@ package com.example.hiui.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,7 +41,7 @@ class HiRefreshDemoActivity : AppCompatActivity() {
     }
 
     var myDataset =
-        arrayOf("HiRefresh", "HiRefresh", "HiRefresh", "HiRefresh", "HiRefresh", "HiRefresh")
+        arrayOf("HiRefresh", "HiRefresh", "HiRefresh", "HiRefresh", "HiRefresh", "HiRefresh","HiRefresh","HiRefresh")
 
     private fun initRecycleView() {
         recyclerView = findViewById<RecyclerView>(R.id.recycleview)

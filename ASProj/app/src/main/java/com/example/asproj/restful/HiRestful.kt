@@ -22,19 +22,26 @@ class HiRestful constructor(val baseUrl: String, callFactory: HiCall.Factory) {
     }
 
     @SuppressLint("SuspiciousIndentation")
+    //根据传进来的接口class对象，返回一个接口的代理对象
     fun <T> create(service: Class<T>): T {
         return Proxy.newProxyInstance(
             service.classLoader,
-            arrayOf<Class<*>>(service)
-        ) { proxy, method, args ->
-            var methodParser = methodService.get(method)
-            if (methodParser == null) {
-                methodParser = MethodParser.parse(baseUrl, method, args)
-                methodService[method] = methodParser
-            }
+            arrayOf<Class<*>>(service), object :InvocationHandler{
+                //bugfix 需要考虑空参数，args有可能为空
+                override fun invoke(proxy: Any?, method: Method, args: Array<out Any>?): Any {
 
-            val request = methodParser.newRequest(method, args)
-            scheduler.newCall(request)
-        } as T
+                    var methodParser = methodService[method]
+                    if (methodParser == null) {
+                        methodParser = MethodParser.parse(baseUrl, method)
+                        methodService.put(method, methodParser)
+                    }
+
+                    //bugfix：此处考虑到methodParser复用，多次调用参数有可能不同，
+                    val newRequest = methodParser.newRequest(method,args)
+
+//            callFactory.newCall(newRequest)
+                    return scheduler.newCall(newRequest)
+                }
+            }) as T
     }
 }

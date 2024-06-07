@@ -32,12 +32,12 @@ public class HiLottieOverView extends HiOverView{
     }
 
     @Override
-    protected void onScroll(int scrollY, int mPullRefreshHeight) {
+    public void onScroll(int scrollY, int mPullRefreshHeight) {
 
     }
 
     @Override
-    protected void onVisible() {
+    public void onVisible() {
 
     }
 

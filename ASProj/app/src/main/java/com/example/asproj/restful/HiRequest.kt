@@ -39,6 +39,11 @@ open class HiRequest {
         headers!![name] = value
     }
 
+    //返回的是请求的完整的url
+    //scheme-host-port
+    //https://api.devio.org/v1 --relativeUrl: usr/login ====> https://api.devio.org/v1/user/login
+    //可能存在别的域名的场景
+    //https://api.devio.rog/v2 --relativeUrl:v2/user/login
     fun endPointUrl():String{
         if(relativeUrl == null){
             throw IllegalStateException("relative url must" +

@@ -5,7 +5,7 @@ import com.example.asproj.restful.HiRestful
 
 object ApiFactory {
 //    https://api.xygeng.cn/one
-    private val baseUrl = "http://192.168.11.176:8001/"
+    private val baseUrl = "http://192.168.11.176:5088/"
     private val hiRestful:HiRestful = HiRestful(baseUrl,RetrofitCallFactory(baseUrl))
 
     init {

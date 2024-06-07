@@ -19,7 +19,7 @@ class GsonConvert:HiConvert{
             response.code = jsonObject.optInt("code")
             response.msg = jsonObject.optString("msg")
             val data = jsonObject.opt("data")
-            if((data is JsonObject) or (data is JSONArray)){
+            if((data is JSONObject) or (data is JSONArray)){
                 if(response.code == HiResponse.SUCCESS){
                     response.data = gson.fromJson(data.toString(),
                     dataType)

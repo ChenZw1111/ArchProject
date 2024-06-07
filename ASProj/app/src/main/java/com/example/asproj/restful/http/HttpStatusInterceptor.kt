@@ -10,9 +10,9 @@ class HttpStatusInterceptor:HiInterceptor {
         if(!chain.isRequestPeriod && response != null){
             val code = response.code
             when(code){
-                HiResponse.RC_NEED_LOGIN ->{
-                    ARouter.getInstance().build("/account/login").navigation()
-                }
+//                HiResponse.RC_NEED_LOGIN ->{
+//                    ARouter.getInstance().build("/account/login").navigation()
+//                }
 
                 HiResponse.RC_USER_FORBID ->{
                     var helpurl:String? = null

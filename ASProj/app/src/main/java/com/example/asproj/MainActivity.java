@@ -38,8 +38,8 @@ public class MainActivity extends HiBaseActivity implements MainActivityLogic.Ac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         activityLogic = new MainActivityLogic(this,savedInstanceState);
-        startActivity(new Intent(this,
-                LoginActivity.class));
+//        startActivity(new Intent(this,
+//                LoginActivity.class));
 
     }
 
