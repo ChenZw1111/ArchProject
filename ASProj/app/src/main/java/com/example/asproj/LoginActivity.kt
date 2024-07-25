@@ -1,6 +1,7 @@
 package com.example.asproj
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -26,7 +27,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 @Route(path = "/account/login")
-class LoginActivity : HiBaseActivity() {
+open class LoginActivity : HiBaseActivity() {
     private val REQUEST_CODE_REGISTRATION = 1000
     private val TAG: String = "LoginActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +61,13 @@ class LoginActivity : HiBaseActivity() {
         print("after delay")
         return "result from parse"
     }
-
+    companion object{
+        inline fun <reified T> startActivity(context:Context, block:Intent.() -> Unit){
+            val intent = Intent(context,T::class.java)
+            intent.block()
+            context.startActivity(intent)
+        }
+    }
     private fun goLogin() {
         val name =
             findViewById<InputItemLayout>(R.id.input_item_username).getEditText().text.toString()
